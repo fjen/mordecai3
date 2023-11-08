@@ -125,14 +125,12 @@ def res_formatter(res, search_name, parent=None):
     # iterate through the docs returned by ES
     for i in res['hits']['hits']:
         i = i.to_dict()['_source']
-        names = [i['name']] + i['alternativenames'] 
+        names = [i['name']] + i['alternatenames']
         dists = [jellyfish.levenshtein_distance(search_name, j) for j in names]
-        lat, lon = i['coordinates'].split(",")
         d = {"feature_code": i['feature_code'],
             "feature_class": i['feature_class'],
             "country_code3": i['country_code3'],
-            "lat": float(lat),
-            "lon": float(lon),
+            "coordinates": i['coordinates'],
             "name": i['name'],
             "admin1_code": i['admin1_code'],
             "admin1_name": i['admin1_name'],
@@ -159,7 +157,7 @@ def res_formatter(res, search_name, parent=None):
             d['country_code_parent_match'] = 0
 
         choices.append(d)
-        alt_lengths.append(len(i['alternativenames'])+1)
+        alt_lengths.append(len(i['alternatenames'])+1)
         min_dist.append(np.min(dists))
         max_dist.append(np.max(dists))
         avg_dist.append(np.mean(dists))
@@ -331,13 +329,9 @@ def _format_country_results(res):
     if not res:
         return None
     results = res['hits']['hits'][0].to_dict()['_source']
-    lat, lon = results['coordinates'].split(",") 
-    results['lon'] = float(lon)
-    results['lat'] = float(lat)
     r = {"extracted_name": "",
          "name": results['name'],
-         "lat": lat,
-         "lon": lon,
+         "coordinates": results['coordinates'],
          "admin1_name": results['admin1_name'],
          "admin2_name": results['admin2_name'],
          "country_code3": results['country_code3'],
