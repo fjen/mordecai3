@@ -284,7 +284,7 @@ def add_es_data(ex, conn, max_results=50, fuzzy=0, limit_types=False,
             a_filter = Q("term", feature_class="A")
             combined_filter = p_filter | a_filter
             res = conn.query(q).filter(combined_filter).sort({"alt_name_length": {'order': "desc"}})[0:max_results].execute()
-        if known_country:
+        elif known_country:
             country_filter = Q("term", country_code3=known_country)
             res = conn.query(q).filter(country_filter).sort({"alt_name_length": {'order': "desc"}})[0:max_results].execute()
         else:
