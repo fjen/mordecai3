@@ -160,7 +160,8 @@ class Geoparser:
                  event_geoparse=False,
                  debug=None,
                  trim=None,
-                 check_es=True):
+                 check_es=True,
+                 **kwargs):
         self.debug = debug
         self.trim = trim
         if not nlp:
@@ -175,7 +176,7 @@ class Geoparser:
                 logger.info(f"Error loading token_tensors pipe: {e}")
                 pass
             self.nlp = nlp
-        self.conn = make_conn()
+        self.conn = make_conn(**kwargs)
         if check_es:
             try:
                 assert len(list(geo.conn[1])) > 0

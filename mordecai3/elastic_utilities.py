@@ -11,14 +11,9 @@ from elasticsearch_dsl import Q, Search
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
 
-def make_conn():
-    kwargs = dict(
-        hosts=['localhost'],
-        port=9200,
-        use_ssl=False,
-    )
-    CLIENT = Elasticsearch(**kwargs)
-    conn = Search(using=CLIENT, index="geonames")
+def make_conn(hosts=('localhost'), port=9200, use_ssl=False, index="geonames", **kwargs):
+    CLIENT = Elasticsearch(hosts=hosts, port=port, use_ssl=use_ssl, **kwargs)
+    conn = Search(using=CLIENT, index=index)
     return conn
 
 def setup_es():
