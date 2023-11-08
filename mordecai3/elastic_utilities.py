@@ -129,6 +129,7 @@ def res_formatter(res, search_name, parent=None):
         dists = [jellyfish.levenshtein_distance(search_name, j) for j in names]
         d = {"feature_code": i['feature_code'],
             "feature_class": i['feature_class'],
+            "country_code2": i['country_code2'],
             "country_code3": i['country_code3'],
             "coordinates": i['coordinates'],
             "name": i['name'],
@@ -334,6 +335,7 @@ def _format_country_results(res):
          "coordinates": results['coordinates'],
          "admin1_name": results['admin1_name'],
          "admin2_name": results['admin2_name'],
+         "country_code2": results['country_code2'],
          "country_code3": results['country_code3'],
          "feature_code": results['feature_code'],
          "feature_class": results['feature_class'],
