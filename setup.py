@@ -13,7 +13,7 @@ setup(
             'spacy-transformers>=1.2,<2.0',
             'transformers>=4.2.2,<5.0',
             'spacy>=3.5,<3.7',
-            'torch>=1.2.0,<2.0',
+            'torch>=1.2.0',
             'elasticsearch>=8.0,<9.0',
             'elasticsearch-dsl>=8.0,<9.0',
             'scikit-learn>=0.24.1',
